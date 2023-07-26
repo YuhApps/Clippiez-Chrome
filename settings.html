@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clips</title>
+</head>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        font-size: 18px;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        align-items: center;
+        background: white;
+        /* color: teal; */
+        color: #0FA3B1;
+        display: flex;
+        flex-direction: row;
+        font-size: 32px;
+        font-weight: bold;
+        left: 0;
+        padding: 24px;
+        right: 0;
+        text-transform: uppercase;
+        top: 0;
+        user-select: none;
+        z-index: 20;
+    }
+    header span {
+        vertical-align: middle;
+    }
+    header span.separator {
+        width: 16px;
+    }
+    header svg path {
+      fill: #0FA3B1;
+    }
+    textarea {
+        border: none;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 18px;
+        max-height: 600px;
+        min-height: 120px;
+        outline: 1px solid #80808040;
+        padding: 12px;
+        resize: vertical;
+        width:100%;
+        -webkit-box-sizing: border-box;
+    }
+    ul {
+        margin: 0;
+        padding: 20px;
+    }
+    li {
+        display: flex;
+        flex-direction: row;
+        list-style: none;
+        margin-bottom: 12px;
+        padding: 12px;
+        transition-duration: 0.5s;
+    }
+    li span {
+        align-content: center;
+        flex: 1;
+        margin-right: 12px;
+        padding: 8px 4px;
+        text-align: justify;
+        vertical-align: baseline;
+    }
+    a {
+        align-content: center;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        height: 24px;
+        padding: 12px;
+        text-align: center;
+        transition-duration: 0.5s;
+        vertical-align: middle;
+    }
+    a:hover {
+        background: #a0a0a080;
+        cursor: pointer;
+    }
+    li a {
+        height: 24px;
+        padding: 8px;
+        width: 24px;
+    }
+    .card {
+        border-radius: 8px;
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+    }
+    #wrapper {
+        bottom: 0;
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        position: absolute;
+        right: 0;
+        top: 90px;
+        width: 100%;
+    }
+    #left {
+        /* bottom: 0; */
+        flex: 1;
+        overflow-y: scroll;
+        padding: 20px;
+        position: static;
+    }
+    #right {
+        flex: 2;
+        overflow-y: scroll;
+    }
+    #add {
+        padding: 12px;
+    }
+    #add .button-container {
+        display: flex;
+        flex-direction: row;
+        margin-top: 12px;
+    }
+    #add .button-container span {
+        cursor: pointer;
+        flex: 1;
+        font-weight: bold;
+        padding: 12px;
+        text-align: center;
+        text-transform: uppercase;
+        user-select: none;
+    }
+    #add .button-container span:hover {
+        background: rgba(0,0,0,0.075);
+        transition-duration: 0.5s;
+    }
+    .color-picker-container {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        margin-top: 20px;
+    }
+    .color-picker-container span {
+        border: 3px solid #e0e0e0;
+        border-radius: 6px;
+        flex: 1;
+        height: 20px;
+        margin: 2px;
+    }
+    .color-picker-container span.selected {
+        border: 3px solid black;
+    }
+    .default-color-container {
+        margin-top: 24px;
+        padding: 12px;
+    }
+
+    /* Dark */
+    body.dark {
+        background: #202020;
+    }
+    .dark header {
+        background: #303030;
+        /* color: rgb(0, 192, 192); */
+    }
+    .dark header svg path {
+      /* fill: rgb(0, 192, 192); */
+    }
+    .dark textarea {
+        background: white;
+    }
+    .dark .card {
+        background: #303030;
+    }
+    .dark #add .button-container {
+        color: white;
+    }
+    .dark #add .button-container span:hover {
+        background: rgba(255,255,255,0.075);
+    }
+    .dark i.material-icons:hover {
+        background: rgba(255,255,255,0.15);
+    }
+    .dark li i.material-icons:hover {
+        background: rgba(0,0,0,0.15);
+    }
+    .dark .color-picker-container span {
+        border: 3px solid #303030;
+    }
+    .dark .color-picker-container span.selected {
+        border: 3px solid rgb(0, 192, 192);
+    }
+    .dark p {
+        color: white;
+    }
+
+    @media screen and (max-width: 800px) {
+        header {
+            position: fixed;
+        }
+        #wrapper {
+            flex-direction: column;
+        }
+        #left {
+            flex: none;
+        }
+        #right {
+            flex: none;
+        }
+        #color-picker-container span {
+            margin: 1px;
+        }
+    }
+    @media screen and (max-width: 600px) {
+        header span:nth-child(3), header span:nth-child(5), #scroll-to-top, #scroll-to-bottom {
+            display: none;
+        }
+    }
+</style>
+<body>
+    <header class="card">
+        <span style="flex: 1;">Manage Clips</span>
+        <a id="scroll-to-top" title="Scroll to top">
+            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M24 12c0 6.623-5.377 12-12 12s-12-5.377-12-12 5.377-12 12-12 12 5.377 12 12zm-1 0c0 6.071-4.929 11-11 11s-11-4.929-11-11 4.929-11 11-11 11 4.929 11 11zm-11.5-4.828l-3.763 4.608-.737-.679 5-6.101 5 6.112-.753.666-3.747-4.604v11.826h-1v-11.828z"/></svg>
+        </a>
+        <span class="separator"></span>
+        <a id="scroll-to-bottom" title="Scroll to bottom">
+            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M24 12c0-6.623-5.377-12-12-12s-12 5.377-12 12 5.377 12 12 12 12-5.377 12-12zm-1 0c0-6.071-4.929-11-11-11s-11 4.929-11 11 4.929 11 11 11 11-4.929 11-11zm-11.5 4.828l-3.763-4.608-.737.679 5 6.101 5-6.112-.753-.666-3.747 4.604v-11.826h-1v11.828z"/></svg>
+        </a>
+        <span class="separator"></span>
+        <a id="dark" title="Toggle dark mode">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 4c-4.418 0-8 3.582-8 8s3.582 8 8 8v-16z"/></svg>
+        </a>
+        <span class="separator"></span>
+        <a id="delete-all" id="delete-all" title="Delete all clips">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.597 17.954l-4.591-4.55-4.555 4.596-1.405-1.405 4.547-4.592-4.593-4.552 1.405-1.405 4.588 4.543 4.545-4.589 1.416 1.403-4.546 4.587 4.592 4.548-1.403 1.416z"/></svg>
+        </a>
+        <span class="separator"></span>
+        <a id="export" title="Export as JSON">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 15.889v-2.223s-3.78-.114-7 3.333c1.513-6.587 7-7.778 7-7.778v-2.221l5 4.425-5 4.464z"/></svg>
+        </a>
+    </header>
+    <div id="wrapper">
+        <div id="left">
+            <div class="card" id="add">
+                <textarea name="" id="new-clip" placeholder="Text or Clip json in [{ text, background }] format" rows="1"></textarea>
+                <div id="add-color-picker-container" class="color-picker-container">
+                    <span style="background: #FFFFFF;" class="selected"></span>
+                    <span style="background: #FFCDD2;"></span>
+                    <span style="background: #FFE0B2;"></span>
+                    <span style="background: #FFF9C4;"></span>
+                    <span style="background: #C8E6C9;"></span>
+                    <span style="background: #BBDEFB;"></span>
+                    <span style="background: #C5CAE9;"></span>
+                    <span style="background: #E1BEE7;"></span>
+                    <span style="background: #E0E0E0;"></span>
+                </div>
+                <div class="button-container">
+                    <span id="clear-text">clear all</span>
+                    <span id="add-clip">add clip</span>
+                </div>
+            </div>
+            <div class="card default-color-container" id="default-colors">
+                <p><strong>Default link color from context menu:</strong></p>
+                <div class="color-picker-container" id="default-link-color-container">
+                    <span style="background: #FFFFFF;"></span>
+                    <span style="background: #FFCDD2;"></span>
+                    <span style="background: #FFE0B2;"></span>
+                    <span style="background: #FFF9C4;"></span>
+                    <span style="background: #C8E6C9;"></span>
+                    <span style="background: #BBDEFB;"></span>
+                    <span style="background: #C5CAE9;"></span>
+                    <span style="background: #E1BEE7;"></span>
+                    <span style="background: #E0E0E0;"></span>
+                </div>
+                <p><strong>Default selection color from context menu:</strong></p>
+                <div class="color-picker-container" id="default-selection-text-color-container">
+                    <span style="background: #FFFFFF;"></span>
+                    <span style="background: #FFCDD2;"></span>
+                    <span style="background: #FFE0B2;"></span>
+                    <span style="background: #FFF9C4;"></span>
+                    <span style="background: #C8E6C9;"></span>
+                    <span style="background: #BBDEFB;"></span>
+                    <span style="background: #C5CAE9;"></span>
+                    <span style="background: #E1BEE7;"></span>
+                    <span style="background: #E0E0E0;"></span>
+                </div>
+            </div>
+        </div>
+        <div id="right">
+            <ul id="clips"></ul>
+        </div>
+    </div>
+    <script src="consts.js"></script>
+    <script src="settings.js"></script>
+</body>
+</html>

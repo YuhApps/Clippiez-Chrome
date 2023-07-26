@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clips</title>
+    <style>
+        body {
+            margin: 0;
+            min-width: 480px;
+        }
+        header {
+            background: white;
+            box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+            /* color: teal; */
+            color: #0FA3B1;
+            display: flex;
+            flex-direction: row;
+            font-size: large;
+            font-weight: bold;
+            left: 0;
+            padding: 12px;
+            position: fixed;
+            right: 0;
+            text-align: left;
+            text-transform: uppercase;
+            top: 0;
+            user-select: none;
+            vertical-align: middle;
+        }
+        header span {
+            padding: 6px 4px;
+            vertical-align: middle;
+        }
+        header a {
+            align-items: center;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            padding: 4px;
+            transition-duration: .5s;
+            width: 26px;
+        }
+        header a:hover {
+            background: #d0d0d080;
+        }
+        header a svg {
+            /* fill: teal; */
+            fill: #0FA3B1;
+            flex: 1;
+        }
+        i.material-icons {
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 4px;
+            transition-duration: 0.5s;
+            vertical-align: middle;
+        }
+        i.material-icons:hover {
+            background: rgba(0,0,0,0.15);
+        }
+        ul {
+            margin-top: 60px;
+            overflow: scroll;
+            padding: 4px 8px;
+        }
+        li {
+            border-radius: 8px;
+            box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+            cursor: pointer;
+            font-size: medium;
+            list-style: none;
+            margin: 0;
+            margin-top: 8px;
+            padding: 12px;
+            transition-duration: 0.5s;
+            user-select: none;
+        }
+
+        /* Dark */
+        body.dark {
+            background: #202020;
+        }
+        .dark header {
+            background: #303030;
+            /* color: rgb(0, 192, 192); */
+        }
+        .dark header a:hover {
+            background: #606060e0;
+        }
+        .dark header a svg {
+            fill: rgb(0, 192, 192);
+        }
+        .dark .card {
+            background: #303030;
+        }
+        .dark i.material-icons:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        .separator {
+            width: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span style="flex: 1;">Saved Clips</span>
+        <a id="export" title="Export as JSON">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-6 17c1.513-6.587 7-7.778 7-7.778v-2.222l5 4.425-5 4.464v-2.223c0 .001-3.78-.114-7 3.334z"/></svg>
+        </a>
+        <a id="settings" title="Manage clips">
+            <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m11.998 2c5.517 0 9.997 4.48 9.997 9.998 0 5.517-4.48 9.997-9.997 9.997-5.518 0-9.998-4.48-9.998-9.997 0-5.518 4.48-9.998 9.998-9.998zm0 1.5c-4.69 0-8.498 3.808-8.498 8.498s3.808 8.497 8.498 8.497 8.497-3.807 8.497-8.497-3.807-8.498-8.497-8.498zm2.502 8.495c0-.69.56-1.25 1.25-1.25s1.25.56 1.25 1.25-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25zm-3.75 0c0-.69.56-1.25 1.25-1.25s1.25.56 1.25 1.25-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25zm-3.75 0c0-.69.56-1.25 1.25-1.25s1.25.56 1.25 1.25-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25z"/></svg>
+        </a>
+    </header>
+    <ul id="clips">
+    </ul>
+    <script src="consts.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
